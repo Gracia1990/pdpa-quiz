@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>個資法小測驗</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+    .question { margin: 20px 0; }
+    .choices button { display: block; margin: 5px 0; }
+    .result { font-weight: bold; margin-top: 10px; }
+    #score { font-size: 1.2em; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>📜《個人資料保護法》小測驗</h1>
+  <div id="quiz"></div>
+  <div id="score"></div>
+
+  <script>
+    const questions = [
+      {
+        q: "《個人資料保護法》的適用對象為何？",
+        options: [
+          "只有私人公司",
+          "只有政府機關",
+          "公務機關、公司與個人（例外：純家庭用途）",
+          "只有境外企業"
+        ],
+        answer: 2
+      },
+      {
+        q: "下列哪一項屬於『敏感個人資料』？",
+        options: [
+          "姓名",
+          "通訊地址",
+          "指紋資料",
+          "手機號碼"
+        ],
+        answer: 2
+      },
+      {
+        q: "合法蒐集個人資料應怎樣處理？",
+        options: [
+          "蒐集後即可任意利用",
+          "無需告知當事人",
+          "需說明目的並取得同意",
+          "只要在網路上找得到就可用"
+        ],
+        answer: 2
+      },
+      {
+        q: "個資法所稱『個人資料』不包括？",
+        options: [
+          "生日",
+          "信用評分",
+          "公開的商業地址",
+          "身分證號"
+        ],
+        answer: 2
+      },
+      {
+        q: "若公務員違法利用個資牟利，最高可？",
+        options: [
+          "罰寫悔過書",
+          "被降調",
+          "處五年以下徒刑與罰金",
+          "記一支申誡"
+        ],
+        answer: 2
+      },
+      {
+        q: "當事人可行使哪些權利？",
+        options: [
+          "查詢、更正、刪除",
+          "否認蒐集",
+          "永久保存",
+          "要求公司買保險"
+        ],
+        answer: 0
+      },
+      {
+        q: "以下哪一行為違反最少原則？",
+        options: [
+          "只蒐集必要資料",
+          "收集所有親屬資料",
+          "限於交易所需資料",
+          "使用匿名問卷"
+        ],
+        answer: 1
+      },
+      {
+        q: "如果使用目的變更，應？",
+        options: [
+          "直接使用即可",
+          "不需通知",
+          "刪除原資料",
+          "重新告知並取得同意"
+        ],
+        answer: 3
+      },
+      {
+        q: "違法利用個資的民事罰鍰上限為？",
+        options: [
+          "20萬元",
+          "200萬元",
+          "2000萬元",
+          "2億元"
+        ],
+        answer: 3
+      },
+      {
+        q: "哪一項不屬於個資法的保護原則？",
+        options: [
+          "資料最小化",
+          "安全維護",
+          "自動轉售",
+          "資訊透明"
+        ],
+        answer: 2
+      }
+    ];
+
+    let score = 0;
+    const quizDiv = document.getElementById("quiz");
+    const scoreDiv = document.getElementById("score");
+
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<strong>第${index + 1}題：</strong> ${q.q}`;
+
+      const choiceDiv = document.createElement("div");
+      choiceDiv.className = "choices";
+
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => {
+          if (btn.disabled) return;
+          const isCorrect = i === q.answer;
+          btn.style.backgroundColor = isCorrect ? "#cfc" : "#fcc";
+          if (isCorrect) score++;
+          Array.from(choiceDiv.children).forEach(b => b.disabled = true);
+          const result = document.createElement("div");
+          result.className = "result";
+          result.textContent = isCorrect ? "✔ 答對了！" : `✘ 答錯了，正解是：${q.options[q.answer]}`;
+          div.appendChild(result);
+          if (index === questions.length - 1) {
+            scoreDiv.textContent = `🎯 你總共答對了 ${score} / ${questions.length} 題。`;
+          }
+        };
+        choiceDiv.appendChild(btn);
+      });
+
+      div.appendChild(choiceDiv);
+      quizDiv.appendChild(div);
+    });
+  </script>
+</body>
+</html>
